@@ -1,0 +1,15 @@
+{% extends  'intro/layout.html' %}
+
+{% block content %}
+
+    <h3>Verificar correo Electronico de {{correo}}</h3>
+    {{message}}
+    
+    <form action="{% url 'verificarCorreo' correo %}" method="post">
+        {% csrf_token %}
+        <label for="numver">Codigo de verificacion:</label>
+        <input name="numver" id="numver"></input><br>
+        <input type="submit" value="Verificar"></input>
+    </form>
+
+{% endblock %}
