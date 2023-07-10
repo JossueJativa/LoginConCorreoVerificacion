@@ -299,10 +299,14 @@ def cambiarContrasenaCorrecto(request, correo):
         user.set_password(password)
         user.save()
 
-        return render(request, 'intro/login.html', {
-            'message': "Se ha cambiado la contraseña",
-            'correo': correo,
-        })
+        username = user.username
+
+        user = authenticate(request, username=username, password=password)
+
+        # Check if authentication successful
+        if user is not None:
+            login(request, user)
+            return HttpResponseRedirect(reverse("index"))
     else:
         return render(request, 'intro/VerificadoContrasena.html',{
             'correo': correo,
