@@ -7,4 +7,8 @@ urlpatterns = [
     path("login", views.login_view, name="login"),
     path("logout", views.logout_view, name="logout"),
     path('verificarCorreo/<str:correo>', views.verificarCorreo, name="verificarCorreo"),
+    path('perfil/', views.perfil, name="perfil"),
+    path('cambiarContrasena/', views.cambiarContrasena, name="cambiarContrasena"),
+    path('verificarNumeroCambio/<str:correo>', views.verificarNumeroCambio, name="verificarNumeroCambio"),
+    path('cambiarContrasenaCorrecto/<str:correo>', views.cambiarContrasenaCorrecto, name="cambiarContrasenaCorrecto"),
 ]
