@@ -1,0 +1,29 @@
+{% extends 'intro\layout.html' %}
+
+{% block content %}
+
+    <form action="{% url 'perfil' %}" method="POST">
+        {% csrf_token %}
+        <div class="box">
+            <h3>Perfil de {{user}}</h3>
+    
+            {% if message %}
+                {{message}}<br>
+            {% endif %}
+            <label for="Nombre">Nombre:</label>
+            <input type="text" id="nombre" name="nombre" value="{{user.first_name}}"><br>
+            <label for="Apellido">Apellido:</label>
+            <input type="text" id="apellido" name="apellido" value="{{user.last_name}}"><br>
+            <label for="Email">Email:</label>
+            <input type="text" id="email" name="email" value="{{user.email}}" disabled><br>
+            <label for="Username">Username:</label>
+            <input type="text" id="username" name="username" value="{{user.username}}"><br>
+            <label for="phone" >Telefono:</label>
+            <input type="text" id="phone" name="phone" value="{{user.phone}}"><br>
+            <label for="identity">Cedula:</label>
+            <input type="text" id="identity" name="identity" value="{{user.identity}}"><br>
+        </div>
+        <input type="submit" value="Actualizar">
+    </form>
+    
+{% endblock %}

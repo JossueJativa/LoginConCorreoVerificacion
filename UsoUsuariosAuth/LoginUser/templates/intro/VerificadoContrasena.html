@@ -1,0 +1,16 @@
+{% extends 'intro/layout.html' %}
+
+{% block content %}
+
+    <h1>Cambiar Contraseña de {{correo}}</h1>
+
+    <form action="{% url 'cambiarContrasenaCorrecto' correo %}" method="post">
+        {% csrf_token %}
+        <label for="password">Nueva contraseña:</label>
+        <input type="password" name="password" id="password" required=""></input><br>
+        <label for="password2">Confirmar contraseña:</label>
+        <input type="password" name="password2" id="password2" required=""></input><br>
+        <input type="submit" value="Cambiar"></input><br>
+    </form>
+
+{% endblock %}
