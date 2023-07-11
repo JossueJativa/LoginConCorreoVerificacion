@@ -4,16 +4,19 @@
 
     <form action="{% url 'perfil' %}" method="POST">
         {% csrf_token %}
-        <div class="box">
+        <div class="User-Perfil">
             <h3>Perfil de {{user}}</h3>
     
             {% if message %}
                 {{message}}<br>
             {% endif %}
+            <img src="{{user.photo.url}}" alt="Foto de perfil" width="100" height="100"><br>
             <label for="Nombre">Nombre:</label>
             <input type="text" id="nombre" name="nombre" value="{{user.first_name}}"><br>
             <label for="Apellido">Apellido:</label>
             <input type="text" id="apellido" name="apellido" value="{{user.last_name}}"><br>
+            <label for="Genero">Genero:</label>
+            <input type="text" id="genero" name="genero" value="{{user.genero}}" disabled><br>
             <label for="Email">Email:</label>
             <input type="text" id="email" name="email" value="{{user.email}}" disabled><br>
             <label for="Username">Username:</label>

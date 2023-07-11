@@ -17,3 +17,15 @@ nav ul li a{
     text-decoration: none;
     font-size: 20px;
 }
+
+.User-Perfil{
+    background-color: rgb(152, 209, 219);
+    color: black;
+    border: 1px solid blue;
+    padding: 5px 10px;
+    border-radius: 7px;
+    width: 400px;
+    height: 400px;
+    margin: 0 auto;
+    text-align: center;
+}

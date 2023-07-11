@@ -11,6 +11,11 @@
         {% csrf_token %}
         <label for="username">Usuario</label>
         <input type="text" name="username" id="username" value="{{username}}" required=""></input><br>
+        <label for="genero">Genero:</label>
+        <select name="genero" id="genero" required="">
+            <option value="M">Masculino</option>
+            <option value="F">Femenino</option>
+        </select><br>
         <label for="email">Correo Electronico</label>
         <input type="email" name="email" id="email" value="{{email}}" required=""></input><br>
         <label for="password">Contraseña</label>

@@ -23,6 +23,7 @@ def register(request):
         email = request.POST['email']
         phone = request.POST['phone']
         identity = request.POST['identity']
+        genero = request.POST['genero']
         
         #verificar que la cedula sea valida
         if not verificarCedula(identity):
@@ -98,7 +99,8 @@ def register(request):
         
         #crear el usuario
         try:
-            user = User.objects.create_user(username=username, password=password, email=email, phone=phone, identity=identity, numverification=numero)
+            user = User.objects.create_user(username=username, genero=genero, password=password,
+                                            email=email, phone=phone, identity=identity, numverification=numero)
             user.save()
         except IntegrityError:
             return render(request, 'intro/register.html', {
