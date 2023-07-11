@@ -178,6 +178,7 @@ def perfil(request):
         username = request.POST['username']
         phone = request.POST['phone']
         identity = request.POST['identity']
+        photo = request.POST['photo']
 
         #verificar que la cedula sea valida
         if not verificarCedula(identity):
@@ -215,6 +216,13 @@ def perfil(request):
                     "message": "El numero de identidad ya existe",
                     'user': request.user,
                 })
+            
+        #Verificar que la foto sea valida
+        ## -> Averiguar como poner fotos en django
+        
+        #Verificar que haya una foto
+        if not photo:
+            photo = request.user.photo
 
         #Hacer update a la base de datos
         User.objects.filter(id=request.user.id).update(

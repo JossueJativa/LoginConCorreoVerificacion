@@ -10,7 +10,9 @@
             {% if message %}
                 {{message}}<br>
             {% endif %}
+            <!--Cambio de imagen-->
             <img src="{{user.photo.url}}" alt="Foto de perfil" width="100" height="100"><br>
+            <input type="file" id="photo" name="photo" accept="image/png, image/jpeg" value=""><br>
             <label for="Nombre">Nombre:</label>
             <input type="text" id="nombre" name="nombre" value="{{user.first_name}}"><br>
             <label for="Apellido">Apellido:</label>
