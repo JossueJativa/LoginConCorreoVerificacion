@@ -1,3 +1,4 @@
+import os
 import random
 from django.contrib.auth import login, logout, authenticate
 from django.db import IntegrityError
@@ -24,6 +25,17 @@ def register(request):
         phone = request.POST['phone']
         identity = request.POST['identity']
         genero = request.POST['genero']
+        recapcha = request.POST['g-recaptcha-response']
+
+        #verificar que el recapcha sea valido
+        if recapcha == "":
+            return render(request, 'intro/register.html', {
+                "message": "El recapcha no es valido",
+                'username': username,
+                'phone': phone,
+                'identity': identity,
+                'email': email,
+            })
         
         #verificar que la cedula sea valida
         if not verificarCedula(identity):
@@ -180,6 +192,7 @@ def perfil(request):
         identity = request.POST['identity']
         photo = request.POST['photo']
 
+
         #verificar que la cedula sea valida
         if not verificarCedula(identity):
             return render(request, 'intro/perfil.html', {
@@ -223,11 +236,13 @@ def perfil(request):
         #Verificar que haya una foto
         if not photo:
             photo = request.user.photo
+        else:
+            photo = photo
 
         #Hacer update a la base de datos
         User.objects.filter(id=request.user.id).update(
             first_name=nombre, last_name=apellido, 
-            username=username, phone=phone, identity=identity)
+            username=username, phone=phone, identity=identity, photo=photo)
         
         user = User.objects.get(id=request.user.id)
         
