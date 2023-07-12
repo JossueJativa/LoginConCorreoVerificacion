@@ -236,8 +236,6 @@ def perfil(request):
         #Verificar que haya una foto
         if not photo:
             photo = request.user.photo
-        else:
-            photo = photo
 
         #Hacer update a la base de datos
         User.objects.filter(id=request.user.id).update(
