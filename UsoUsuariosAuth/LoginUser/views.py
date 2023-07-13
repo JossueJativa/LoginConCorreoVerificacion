@@ -1,5 +1,3 @@
-import os
-import random
 from django.contrib.auth import login, logout, authenticate
 from django.db import IntegrityError
 from django.urls import reverse
@@ -8,8 +6,13 @@ from django.shortcuts import render
 from django.core.mail import EmailMessage
 from django.template.loader import render_to_string
 from django.conf import settings
-from PIL import Image
 
+#Librerias externas
+from PIL import Image
+import os
+import random
+
+#Importar desde el mismo proyecto
 from .models import User
 from .verificar import *
 
@@ -256,11 +259,11 @@ def perfil(request):
         #Guardar la foto en la carpeta
         save = os.path.join(set, name)
 
-        #Ubicar la ruta de la foto
+        #Ubicar la ruta de la foto del usuario
         photo = request.user.identity + '/' + name
 
         try:
-            photoupload.convert('RGB').save(save, quality=95)
+            photoupload.convert('RGB').save(save, quality=50)
         except:
             return render(request, 'intro/perfil.html', {
                 "message": "La foto no es valida", 
