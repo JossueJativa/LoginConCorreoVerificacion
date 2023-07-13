@@ -8,6 +8,7 @@ from django.shortcuts import render
 from django.core.mail import EmailMessage
 from django.template.loader import render_to_string
 from django.conf import settings
+from PIL import Image
 
 from .models import User
 from .verificar import *
@@ -190,7 +191,10 @@ def perfil(request):
         username = request.POST['username']
         phone = request.POST['phone']
         identity = request.POST['identity']
-        photo = request.POST['photo']
+        try:
+            photo = request.FILES['photo']
+        except:
+            photo = request.user.photo
 
 
         #verificar que la cedula sea valida
@@ -230,12 +234,37 @@ def perfil(request):
                     'user': request.user,
                 })
             
-        #Verificar que la foto sea valida
-        ## -> Averiguar como poner fotos en django
+        #Subir foto a la carpeta media
+        photoupload = Image.open(photo)
+
+        length = len(photo.name)
+        #Coger los 4 ultimos caracteres del nombre de la foto
+        if photo.name[length-4:length] == '.png':
+            name = photo.name.replace('.png', '.jpg')
+        else:
+            name = photo.name
+
+        #Crear una capeta con el nombre del usuario
+        try:
+            os.mkdir(settings.MEDIA_ROOT + '/' + request.user.identity)
+        except:
+            settings.MEDIA_ROOT + '/' + request.user.identity
         
-        #Verificar que haya una foto
-        if not photo:
-            photo = request.user.photo
+        #Reconocer la ruta de la carpeta
+        set = settings.MEDIA_ROOT + '/' + request.user.identity
+        
+        #Guardar la foto en la carpeta
+        save = os.path.join(set, name)
+
+        #Ubicar la ruta de la foto
+        photo = request.user.identity + '/' + name
+
+        try:
+            photoupload.convert('RGB').save(save, quality=95)
+        except:
+            return render(request, 'intro/perfil.html', {
+                "message": "La foto no es valida", 
+            })
 
         #Hacer update a la base de datos
         User.objects.filter(id=request.user.id).update(

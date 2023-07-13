@@ -2,7 +2,7 @@
 
 {% block content %}
 
-    <form action="{% url 'perfil' %}" method="POST">
+    <form action="{% url 'perfil' %}" method="POST" enctype="multipart/form-data">
         {% csrf_token %}
         <div class="User-Perfil">
             <h3>Perfil de {{user}}</h3>
@@ -12,7 +12,7 @@
             {% endif %}
             <!--Cambio de imagen-->
             <img src="{{user.photo.url}}" alt="Foto de perfil" width="100" height="100"><br>
-            <input type="file" id="photo" name="photo" accept="image/png, image/jpeg" value=""><br>
+            <input type="file" id="photo" name="photo" accept="image/png, image/jpeg"><br>
             <label for="Nombre">Nombre:</label>
             <input type="text" id="nombre" name="nombre" value="{{user.first_name}}"><br>
             <label for="Apellido">Apellido:</label>
