@@ -366,3 +366,50 @@ def cambiarContrasenaCorrecto(request, correo):
         return render(request, 'intro/VerificadoContrasena.html',{
             'correo': correo,
         })
+    
+##Hay que mejorar este metodo
+def recortarimagen (request):
+    if request.method == "POST":
+        try:
+            photo = request.FILES['photo']
+        except:
+            photo = request.user.photo
+
+        #Subir foto a la carpeta media
+        photoupload = Image.open(photo)
+
+        length = len(photo.name)
+        #Coger los 4 ultimos caracteres del nombre de la foto
+        if photo.name[length-4:length] == '.png':
+            name = photo.name.replace('.png', '.jpg')
+        else:
+            name = photo.name
+
+        #Crear una capeta con el nombre del usuario
+        try:
+            os.mkdir(settings.MEDIA_ROOT + '/' + request.user.identity + '/SolicitudVisa')
+        except:
+            settings.MEDIA_ROOT + '/' + request.user.identity + '/SolicitudVisa'
+        
+        #Reconocer la ruta de la carpeta
+        set = settings.MEDIA_ROOT + '/' + request.user.identity + '/SolicitudVisa'
+        
+        #Guardar la foto en la carpeta
+        save = os.path.join(set, name)
+
+        #Ubicar la ruta de la foto del usuario
+        photo = request.user.identity + '/SolicitudVisa' + '/' + name
+
+        try:
+            photoupload.convert('RGB').save(save, quality=50)
+        except:
+            return render(request, 'intro/recortarImagen.html', {
+                "message": "La foto no es valida", 
+            })
+        
+        #Guardar la foto en la base de datos
+        User.objects.filter(id=request.user.id).update(solicitudFoto = photo)
+
+        return render(request, 'intro/recortarImagen.html')
+    else:
+        return render(request, 'intro/recortarImagen.html')

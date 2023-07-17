@@ -1,0 +1,26 @@
+{% extends 'intro/layout.html' %}
+
+{% block content %}
+
+<h1>Recortar Imagen</h1>
+
+<div class="User-Perfil">
+
+    {% if message %}
+    <h4>{{message}}</h4>
+    {% endif %}
+    <form action="{% url 'recortarImagen' %}" method="post">
+        {% csrf_token %}
+        <label for="photo">Subir tu foto:</label><br>
+        <input type="file" id="photo" name="photo" accept="image/png, image/jpeg"><br>
+        <button id="btn">Recortar</button><br>
+    </form>
+
+    <label for="photo">Foto Visa:</label><br>
+
+    <!--Mostrar la foto que a subido-->
+    <img id="img" src="{{user.solicitudFoto.url}}" alt="FotoVisa" width="300" height="300"><br>
+
+</div>
+
+{% endblock %}

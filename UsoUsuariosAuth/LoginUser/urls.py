@@ -11,4 +11,5 @@ urlpatterns = [
     path('cambiarContrasena/', views.cambiarContrasena, name="cambiarContrasena"),
     path('verificarNumeroCambio/<str:correo>', views.verificarNumeroCambio, name="verificarNumeroCambio"),
     path('cambiarContrasenaCorrecto/<str:correo>', views.cambiarContrasenaCorrecto, name="cambiarContrasenaCorrecto"),
+    path('recortarImagen', views.recortarimagen, name="recortarImagen"),
 ]

@@ -10,3 +10,4 @@ class User(AbstractUser):
     identity = models.CharField(max_length=10, null=True)
     numverification = models.CharField(max_length=4, null=True)
     is_verified = models.BooleanField(default=False)
+    solicitudFoto = models.ImageField(null=True, upload_to='media')
